@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//添加上传到jcenter仓库用到的插件
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    api project(':apt-annotations')
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+String localBintrayUser = properties.getProperty("bintray.user")
+String localBintrayApikey = properties.getProperty("bintray.apikey")
+
+//推送指令
+//./gradlew clean build bintrayUpload
+//添加
+publish {
+    bintrayUser = localBintrayUser   //bintray.com用户名
+    bintrayKey = localBintrayApikey  //bintray.com apikey
+    dryRun = false
+    userOrg = localBintrayUser
+    groupId = 'com.'+ localBintrayUser +'.apt'//jcenter上的路径
+    artifactId = 'apt-api'//项目名称
+    publishVersion = '0.0.2'//版本号
+    desc = 'A annotation processor tool for bindview.'
+    website = 'https://github.com/xyzlf/Grunt'
+}

@@ -1,0 +1,31 @@
+apply plugin: 'java-library'
+apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'//添加上传到jcenter仓库用到的插件
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+String localBintrayUser = properties.getProperty("bintray.user")
+String localBintrayApikey = properties.getProperty("bintray.apikey")
+
+//推送指令
+//./gradlew clean build bintrayUpload
+//添加
+publish {
+    bintrayUser = localBintrayUser   //bintray.com用户名
+    bintrayKey = localBintrayApikey  //bintray.com apikey
+    dryRun = false
+    userOrg = localBintrayUser
+    groupId = 'com.' + localBintrayUser + '.apt'//jcenter上的路径
+    artifactId = 'apt-annotations'//项目名称
+    publishVersion = '0.0.2'//版本号
+    desc = 'A annotation processor tool for bindview.'
+    website = 'https://github.com/xyzlf/Grunt'
+}
