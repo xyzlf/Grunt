@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'//添加上传到jcenter仓库用到的插件
 
 android {
@@ -50,7 +51,7 @@ publish {
     userOrg = localBintrayUser
     groupId = 'com.'+ localBintrayUser +'.apt'//jcenter上的路径
     artifactId = 'apt-api'//项目名称
-    publishVersion = '0.0.1'//版本号
+    publishVersion = '0.0.2'//版本号
     desc = 'A annotation processor tool for bindview.'
     website = 'https://github.com/xyzlf/Grunt'
 }
