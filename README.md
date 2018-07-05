@@ -29,6 +29,10 @@ Grunt：war3里面，兽族步兵的称号。希望view的初始化，能像兽�
         }
     }
 
+proguard-rules.pro 混淆文件增加：
+
+    -keep class **$$ViewInject { *; }
+
 
 # 关于我
 
